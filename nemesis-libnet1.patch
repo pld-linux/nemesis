@@ -1,0 +1,229 @@
+diff -Nur nemesis-1.4beta3.org/configure.in nemesis-1.4beta3/configure.in
+--- nemesis-1.4beta3.org/configure.in	2003-05-29 02:44:45.000000000 +0000
++++ nemesis-1.4beta3/configure.in	2003-07-03 22:05:29.000000000 +0000
+@@ -62,22 +62,22 @@
+     ;;
+ esac
+ 
+-CPPFLAGS="${CPPFLAGS} `libnet-config --defines`"
++CPPFLAGS="${CPPFLAGS} `libnet1-config --defines`"
+ CFLAGS="${CFLAGS} -funroll-loops -fomit-frame-pointer -pipe"
+ 
+-if test `libnet-config --cflags | wc -c` = "1"; then
++if test `libnet1-config --cflags | wc -c` = "1"; then
+     CPPFLAGS="${CPPFLAGS} -I/usr/local/include -I/sw/include"
+     LIBNET_CONFIG_BROKEN_CFLAGS=yes
+ else
+-    CPPFLAGS="${CPPFLAGS} `libnet-config --cflags`"
++    CPPFLAGS="${CPPFLAGS} `libnet1-config --cflags`"
+ fi
+ 
+-if test `libnet-config --libs | wc -c` = "1"; then
+-    AC_MSG_WARN(libnet-config --libs is broken on your system.  If you)
++if test `libnet1-config --libs | wc -c` = "1"; then
++    AC_MSG_WARN(libnet1-config --libs is broken on your system.  If you)
+     AC_MSG_WARN(are using a precompiled package please notify the maintainer.)
+     LIBS="${LIBS} -L/usr/local/lib -L/sw/lib"
+ else
+-    LIBS="${LIBS} `libnet-config --libs | sed s/\-lnet//`"
++    LIBS="${LIBS} `libnet1-config --libs | sed s/\-lnet1//`"
+ fi
+ 
+ default_directory="/usr /usr/local"
+@@ -111,7 +111,7 @@
+ AC_CHECK_LIB(m, fabs)
+ 
+ LNET=""
+-AC_CHECK_HEADERS(libnet.h,, LNET="no")
++AC_CHECK_HEADERS(libnet1.h,, LNET="no")
+ 
+ if test "$LNET" = "no"; then
+    echo
+@@ -130,29 +130,29 @@
+     libnet_dir="/usr/include /usr/local/include /sw/include"
+   fi
+ else
+-  libnet_dir=`libnet-config --cflags | cut -dI -f2`
++  libnet_dir=`libnet1-config --cflags | cut -dI -f2`
+ fi
+ 
+ LIBNET_INC_DIR=""
+ for i in $libnet_dir; do
+-  if test -r $i/libnet.h; then
++  if test -r $i/libnet1.h; then
+     LIBNET_INC_DIR=$i
+   fi
+ done
+ 
+ if test "$LIBNET_INC_DIR" != ""; then
+-  if eval "grep LIBNET_VERSION $LIBNET_INC_DIR/libnet.h | grep -v 1.0.2a >/dev/null"; then
++  if eval "grep LIBNET_VERSION $LIBNET_INC_DIR/libnet1.h | grep -v 1.0.2a >/dev/null"; then
+     AC_MSG_RESULT(no)
+     echo
+     echo "   ERROR!  Nemesis will *only* work with libnet version 1.0.2a,"
+     echo "   go get it from"
+     echo "   http://www.packetfactory.net/projects/libnet/"
+-    FAIL_MESSAGE("libnet 1.0.2a (libnet.h)", $LIBNET_INC_DIR)
++    FAIL_MESSAGE("libnet 1.0.2a (libnet1.h)", $LIBNET_INC_DIR)
+   fi
+   AC_MSG_RESULT(yes)
+ else
+   AC_MSG_RESULT(no)
+-  FAIL_MESSAGE("libnet 1.0.2a (libnet.h)", $libnet_dir)
++  FAIL_MESSAGE("libnet 1.0.2a (libnet1.h)", $libnet_dir)
+ fi
+ 
+ AC_ARG_WITH(libnet_includes,
+@@ -188,7 +188,7 @@
+ dnl fi
+ 
+ LNET=""
+-AC_CHECK_LIB(net, libnet_build_ip,, LNET="no")
++AC_CHECK_LIB(net1, libnet_build_ip,, LNET="no")
+ 
+ if test "$LNET" = "no"; then
+    echo
+diff -Nur nemesis-1.4beta3.org/src/nemesis-arp.h nemesis-1.4beta3/src/nemesis-arp.h
+--- nemesis-1.4beta3.org/src/nemesis-arp.h	2003-06-07 11:26:42.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-arp.h	2003-07-03 22:06:34.000000000 +0000
+@@ -27,7 +27,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int buildarp(ETHERhdr *, ARPhdr *, PayloadData *, char *, int);
+diff -Nur nemesis-1.4beta3.org/src/nemesis-dns.h nemesis-1.4beta3/src/nemesis-dns.h
+--- nemesis-1.4beta3.org/src/nemesis-dns.h	2003-06-07 11:27:08.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-dns.h	2003-07-03 22:06:34.000000000 +0000
+@@ -27,7 +27,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int state;  /* default to UDP */
+diff -Nur nemesis-1.4beta3.org/src/nemesis-ethernet.h nemesis-1.4beta3/src/nemesis-ethernet.h
+--- nemesis-1.4beta3.org/src/nemesis-ethernet.h	2003-06-07 11:19:16.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-ethernet.h	2003-07-03 22:06:34.000000000 +0000
+@@ -26,7 +26,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ #ifndef ETHERTYPE_8021Q
+diff -Nur nemesis-1.4beta3.org/src/nemesis-functions.c nemesis-1.4beta3/src/nemesis-functions.c
+--- nemesis-1.4beta3.org/src/nemesis-functions.c	2003-06-07 11:09:34.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-functions.c	2003-07-03 22:06:44.000000000 +0000
+@@ -34,7 +34,7 @@
+ #if defined(HAVE_NETINET_IP_VAR_H)
+     #include <netinet/ip_var.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include <nemesis.h>
+ 
+ #if defined(WIN32)
+diff -Nur nemesis-1.4beta3.org/src/nemesis-icmp.h nemesis-1.4beta3/src/nemesis-icmp.h
+--- nemesis-1.4beta3.org/src/nemesis-icmp.h	2003-06-07 11:28:08.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-icmp.h	2003-07-03 22:06:34.000000000 +0000
+@@ -28,7 +28,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int mode;
+diff -Nur nemesis-1.4beta3.org/src/nemesis-igmp.h nemesis-1.4beta3/src/nemesis-igmp.h
+--- nemesis-1.4beta3.org/src/nemesis-igmp.h	2003-06-07 11:28:33.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-igmp.h	2003-07-03 22:06:34.000000000 +0000
+@@ -27,7 +27,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int buildigmp(ETHERhdr *, IPhdr *ip, IGMPhdr *igmp, PayloadData *pd,
+diff -Nur nemesis-1.4beta3.org/src/nemesis-ip.h nemesis-1.4beta3/src/nemesis-ip.h
+--- nemesis-1.4beta3.org/src/nemesis-ip.h	2003-06-07 11:19:35.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-ip.h	2003-07-03 22:06:34.000000000 +0000
+@@ -23,7 +23,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int buildip(ETHERhdr *, IPhdr *, PayloadData *, OptionsData *, char *);
+diff -Nur nemesis-1.4beta3.org/src/nemesis-ospf.h nemesis-1.4beta3/src/nemesis-ospf.h
+--- nemesis-1.4beta3.org/src/nemesis-ospf.h	2003-06-08 01:01:29.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-ospf.h	2003-07-03 22:06:34.000000000 +0000
+@@ -30,7 +30,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ u_short id,            /* IP id */
+diff -Nur nemesis-1.4beta3.org/src/nemesis-rip.h nemesis-1.4beta3/src/nemesis-rip.h
+--- nemesis-1.4beta3.org/src/nemesis-rip.h	2003-06-07 11:29:27.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-rip.h	2003-07-03 22:06:34.000000000 +0000
+@@ -30,7 +30,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int buildrip(ETHERhdr *, IPhdr *, UDPhdr *, RIPhdr *, PayloadData *,
+diff -Nur nemesis-1.4beta3.org/src/nemesis-tcp.h nemesis-1.4beta3/src/nemesis-tcp.h
+--- nemesis-1.4beta3.org/src/nemesis-tcp.h	2003-06-07 11:30:15.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-tcp.h	2003-07-03 22:06:34.000000000 +0000
+@@ -27,7 +27,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int buildtcp(ETHERhdr *, IPhdr *, TCPhdr *, PayloadData *, OptionsData *,
+diff -Nur nemesis-1.4beta3.org/src/nemesis-udp.h nemesis-1.4beta3/src/nemesis-udp.h
+--- nemesis-1.4beta3.org/src/nemesis-udp.h	2003-06-07 11:30:38.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis-udp.h	2003-07-03 22:06:34.000000000 +0000
+@@ -27,7 +27,7 @@
+ #else
+     #include <winsock2.h>
+ #endif
+-#include <libnet.h>
++#include <libnet1.h>
+ #include "nemesis.h"
+ 
+ int buildudp(ETHERhdr *, IPhdr *, UDPhdr *, PayloadData *, OptionsData *,
+diff -Nur nemesis-1.4beta3.org/src/nemesis.h nemesis-1.4beta3/src/nemesis.h
+--- nemesis-1.4beta3.org/src/nemesis.h	2003-06-26 03:57:25.000000000 +0000
++++ nemesis-1.4beta3/src/nemesis.h	2003-07-03 22:06:34.000000000 +0000
+@@ -12,7 +12,7 @@
+     #include "config.h"
+ #endif
+ 
+-#include <libnet.h>
++#include <libnet1.h>
+ 
+ #define BUILD 22
+ #define PAYLOADMODE 0
