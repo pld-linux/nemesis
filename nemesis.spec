@@ -6,6 +6,7 @@ Release:	1
 License:	BSD
 Group:		Networking
 Source0:	http://jeff.wwti.com/nemesis/%{name}-%{version}.tar.gz
+# Source0-md5:	19e3e8eb6ff86c35580adf630e6df398
 URL:		http://www.packetfactory.net/Projects/nemesis/
 BuildRequires:	libpcap-devel
 BuildRequires:	libnet-devel
