@@ -5,7 +5,7 @@ Version:	1.4
 Release:	0.1
 License:	BSD
 Group:		Networking
-Source0:	http://www.packetfactory.net/Projects/nemesis/%{name}-%{version}beta3.tar.gz 
+Source0:	http://www.packetfactory.net/Projects/nemesis/%{name}-%{version}beta3.tar.gz
 # Source0-md5:	6409bddf2d54cc9400028f491d342aea
 Patch0:		%{name}-libnet1.patch
 URL:		http://www.packetfactory.net/Projects/nemesis/
