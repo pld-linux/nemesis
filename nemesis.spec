@@ -1,5 +1,5 @@
 Summary:	nemesis packet injection tool-suite
-Summary(pl):	Zbiór narzêdzi do injekcji pakietów
+Summary(pl):	Zbiór narzêdzi do iniekcji pakietów
 Name:		nemesis
 Version:	1.4
 Release:	0.1
@@ -19,7 +19,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 nemesis packet injection tool-suite.
 
 %description -l pl
-Zbiór narzêdzi do injekcji pakietów.
+Zbiór narzêdzi do iniekcji pakietów.
 
 %prep
 %setup -q -n %{name}-%{version}beta3
