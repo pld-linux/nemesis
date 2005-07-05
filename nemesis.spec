@@ -9,10 +9,10 @@ Source0:	http://www.packetfactory.net/Projects/nemesis/%{name}-%{version}beta3.t
 # Source0-md5:	6409bddf2d54cc9400028f491d342aea
 Patch0:		%{name}-libnet1.patch
 URL:		http://www.packetfactory.net/Projects/nemesis/
+BuildRequires:  autoconf
+BuildRequires:  automake
 BuildRequires:	libpcap-devel
 BuildRequires:	libnet1-devel
-BuildRequires:	autoconf
-BuildRequires:	automake
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -26,7 +26,7 @@ Zbiór narzêdzi do iniekcji pakietów.
 %patch0 -p1
 
 %build
-install %{_datadir}/automake/config.* .
+install /usr/share/automake/config.* .
 %{__aclocal}
 %{__autoconf}
 %configure
