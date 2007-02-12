@@ -1,5 +1,5 @@
 Summary:	nemesis packet injection tool-suite
-Summary(pl):	Zbi髍 narz阣zi do iniekcji pakiet體
+Summary(pl.UTF-8):   Zbi贸r narz臋dzi do iniekcji pakiet贸w
 Name:		nemesis
 Version:	1.4
 Release:	0.1
@@ -18,8 +18,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 nemesis packet injection tool-suite.
 
-%description -l pl
-Zbi髍 narz阣zi do iniekcji pakiet體.
+%description -l pl.UTF-8
+Zbi贸r narz臋dzi do iniekcji pakiet贸w.
 
 %prep
 %setup -q -n %{name}-%{version}beta3
