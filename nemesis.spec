@@ -1,5 +1,5 @@
 Summary:	nemesis packet injection tool-suite
-Summary(pl.UTF-8):   Zbiór narzędzi do iniekcji pakietów
+Summary(pl.UTF-8):	Zbiór narzędzi do iniekcji pakietów
 Name:		nemesis
 Version:	1.4
 Release:	0.1
