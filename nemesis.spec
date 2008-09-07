@@ -2,10 +2,11 @@ Summary:	nemesis packet injection tool-suite
 Summary(pl.UTF-8):	Zbiór narzędzi do iniekcji pakietów
 Name:		nemesis
 Version:	1.4
-Release:	0.1
+%define	_beta	beta3
+Release:	0.%{_beta}.1
 License:	BSD
 Group:		Networking
-Source0:	http://www.packetfactory.net/Projects/nemesis/%{name}-%{version}beta3.tar.gz
+Source0:	http://www.packetfactory.net/Projects/nemesis/%{name}-%{version}%{_beta}.tar.gz
 # Source0-md5:	6409bddf2d54cc9400028f491d342aea
 Patch0:		%{name}-libnet1.patch
 URL:		http://www.packetfactory.net/Projects/nemesis/
@@ -22,7 +23,7 @@ nemesis packet injection tool-suite.
 Zbiór narzędzi do iniekcji pakietów.
 
 %prep
-%setup -q -n %{name}-%{version}beta3
+%setup -q -n %{name}-%{version}%{_beta}
 %patch0 -p1
 
 %build
